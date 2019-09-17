@@ -1,11 +1,14 @@
 package ru.solon4ak.service;
 
 import ru.solon4ak.dao.UserDao;
-import ru.solon4ak.dao.UserDaoImpl;
+import ru.solon4ak.dao.UserDaoHBNTImpl;
+import ru.solon4ak.dao.UserDaoJDBCImpl;
 import ru.solon4ak.model.User;
 import ru.solon4ak.util.DBException;
 
 import java.sql.SQLException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class UserServiceImpl implements UserService {
@@ -15,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     private UserServiceImpl() {
-        userDao = UserDaoImpl.getInstance();
+        userDao = UserDaoHBNTImpl.getInstance();
     }
 
     public static UserServiceImpl getInstance() {
@@ -53,27 +56,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addUser(User user) throws DBException {
+    public void addUser(User user) throws DBException {
         try {
-            return userDao.add(user);
+            user.setDateCreated(Date.from(Instant.now()));
+            user.setLastUpdate(Date.from(Instant.now()));
+            userDao.add(user);
         } catch (SQLException e) {
             throw new DBException(e);
         }
     }
 
     @Override
-    public boolean updateUser(User user) throws DBException {
+    public void updateUser(User user) throws DBException {
         try {
-            return userDao.update(user);
+            user.setLastUpdate(Date.from(Instant.now()));
+            userDao.update(user);
         } catch (SQLException e) {
             throw new DBException(e);
         }
     }
 
     @Override
-    public boolean deleteUser(long id) throws DBException {
+    public void deleteUser(User user) throws DBException {
         try {
-            return userDao.delete(id);
+            userDao.delete(user);
         } catch (SQLException e) {
             throw new DBException(e);
         }
