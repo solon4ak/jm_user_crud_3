@@ -9,7 +9,7 @@ public interface UserService {
     List<User> getAllUsers() throws DBException;
     User getUserById(long id) throws DBException;
     User getUserByName(String name) throws DBException;
-    boolean addUser(User user) throws DBException;
-    boolean updateUser(User user) throws DBException;
-    boolean deleteUser(long id) throws DBException;
+    void addUser(User user) throws DBException;
+    void updateUser(User user) throws DBException;
+    void deleteUser(User user) throws DBException;
 }

@@ -1,31 +1,63 @@
 package ru.solon4ak.model;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
-public class User {
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
+    private static final long serialVersionUID = -8706689714326132798L;
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "first_name", nullable = false, unique = true)
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
+
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
-    private byte age;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "birth_date", nullable = false)
+    private Date birthDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "date_created")
+    private Date dateCreated;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "last_update")
+    private Date lastUpdate;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String address, String phoneNumber, byte age) {
+    public User(String firstName, String lastName, String email, String address, String phoneNumber, Date birthDate) {
+        this();
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.age = age;
+        this.birthDate = birthDate;
     }
 
     public User(Long id, String firstName, String lastName, String email,
-                String address, String phoneNumber, byte age) {
-        this(firstName, lastName, email, address, phoneNumber, age);
+                String address, String phoneNumber, Date birthDate) {
+        this(firstName, lastName, email, address, phoneNumber, birthDate);
         this.id = id;
     }
 
@@ -69,18 +101,33 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public byte getAge() {
-        return age;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setAge(byte age) {
-        this.age = age;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public Long getId() {
         return id;
     }
-
 
     @Override
     public int hashCode() {
@@ -103,7 +150,7 @@ public class User {
             return false;
         }
         final User other = (User) obj;
-        if (this.age != other.age) {
+        if (this.birthDate != other.birthDate) {
             return false;
         }
         if (!Objects.equals(this.firstName, other.firstName)) {
@@ -118,11 +165,5 @@ public class User {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", firstName=" + firstName +
-                ", lastName=" + lastName + ", email=" + email +
-                ", address=" + address + ", phoneNumber=" + phoneNumber +
-                ", age=" + age + '}';
-    }
+
 }

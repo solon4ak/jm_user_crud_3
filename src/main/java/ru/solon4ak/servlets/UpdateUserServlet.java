@@ -11,6 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +33,8 @@ public class UpdateUserServlet extends HttpServlet {
 
         long id = Long.parseLong(req.getParameter("id"));
 
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.forLanguageTag("ru_RU"));
+
         try {
             User user = userService.getUserById(id);
 
@@ -35,14 +43,14 @@ public class UpdateUserServlet extends HttpServlet {
             user.setEmail(req.getParameter("email"));
             user.setAddress(req.getParameter("address"));
             user.setPhoneNumber(req.getParameter("phoneNumber"));
-            user.setAge(Byte.valueOf(req.getParameter("age")));
+            user.setBirthDate(formatter.parse(req.getParameter("birthDate")));
 
             userService.updateUser(user);
 
             req.setAttribute("user", user);
             resp.setStatus(200);
             req.getRequestDispatcher("/WEB-INF/jsp/view/user/view.jsp").forward(req, resp);
-        } catch (DBException ex) {
+        } catch (DBException | ParseException ex) {
             resp.setStatus(400);
             Logger.getLogger(UpdateUserServlet.class.getName())
                     .log(Level.SEVERE, "Exception while updating user.", ex);

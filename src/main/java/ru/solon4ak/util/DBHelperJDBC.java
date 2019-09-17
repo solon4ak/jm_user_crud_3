@@ -2,7 +2,7 @@ package ru.solon4ak.util;
 
 import java.sql.*;
 
-public class DBHelper {
+public class DBHelperJDBC {
 
     private static final String URL = "jdbc:mysql://localhost:3306/db_example?useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String USER_NAME = "root";
@@ -10,14 +10,14 @@ public class DBHelper {
 
     private static Connection connection;
 
-    private static DBHelper instance;
+    private static DBHelperJDBC instance;
 
-    private DBHelper() {
+    private DBHelperJDBC() {
     }
 
-    public static DBHelper getInstance() {
+    public static DBHelperJDBC getInstance() {
         if (instance == null) {
-            instance = new DBHelper();
+            instance = new DBHelperJDBC();
         }
         return instance;
     }

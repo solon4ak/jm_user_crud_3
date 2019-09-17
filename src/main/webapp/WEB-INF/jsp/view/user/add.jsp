@@ -34,8 +34,8 @@
             <td><input type="text" name="phoneNumber"/></td>
         </tr>
         <tr>
-            <td>Age</td>
-            <td><input type="text" name="age"/></td>
+            <td>Birth date (21.10.1991)</td>
+            <td><input type="text" name="birthDate"/></td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Submit"/></td>
@@ -44,8 +44,9 @@
     </table>
 
 </form>
-<br/>
-<br/>
-<a href="<c:url value="list" />">List users</a>
+<p>
+    <a href="<c:url value="list" />">List users</a>
+</p>
+
 </body>
 </html>

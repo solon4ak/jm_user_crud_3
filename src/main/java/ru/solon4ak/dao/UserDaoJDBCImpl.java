@@ -1,34 +1,34 @@
 package ru.solon4ak.dao;
 
 import ru.solon4ak.model.User;
-import ru.solon4ak.util.DBHelper;
+import ru.solon4ak.util.DBHelperJDBC;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoImpl implements UserDao {
+public class UserDaoJDBCImpl implements UserDao {
 
-    private DBHelper dbUtil;
+    private DBHelperJDBC dbUtil;
 
-    private static UserDaoImpl instance;
+    private static UserDaoJDBCImpl instance;
 
-    private UserDaoImpl() {
-        dbUtil = DBHelper.getInstance();
+    private UserDaoJDBCImpl() {
+        dbUtil = DBHelperJDBC.getInstance();
     }
 
-    public static UserDaoImpl getInstance() {
+    public static UserDaoJDBCImpl getInstance() {
         if (instance == null) {
-            instance = new UserDaoImpl();
+            instance = new UserDaoJDBCImpl();
         }
         return instance;
     }
 
     @Override
-    public boolean add(User user) throws SQLException {
+    public void add(User user) throws SQLException {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("insert into users (first_name, last_name, email, address, phone_number, age) ");
+        sb.append("insert into users (first_name, last_name, email, address, phone_number, birth_date) ");
         sb.append("values (?, ?, ?, ?, ?, ?)");
 
         Connection connection = dbUtil.connect();
@@ -39,13 +39,11 @@ public class UserDaoImpl implements UserDao {
         ps.setString(3, user.getEmail());
         ps.setString(4, user.getAddress());
         ps.setString(5, user.getPhoneNumber());
-        ps.setByte(6, user.getAge());
+        ps.setDate(6, new java.sql.Date(user.getBirthDate().getTime()));
 
-        boolean isInserted = ps.executeUpdate() > 0;
+        ps.executeUpdate();
         ps.close();
         dbUtil.disconnect();
-
-        return isInserted;
     }
 
     @Override
@@ -57,6 +55,7 @@ public class UserDaoImpl implements UserDao {
         Statement stmt = connection.createStatement();
         ResultSet result = stmt.executeQuery(sql);
         User user;
+
         while (result.next()) {
             user = new User(
                     result.getLong("id"),
@@ -65,8 +64,10 @@ public class UserDaoImpl implements UserDao {
                     result.getString("email"),
                     result.getString("address"),
                     result.getString("phone_number"),
-                    result.getByte("age")
+                    result.getDate("birth_date")
             );
+            user.setDateCreated(result.getTimestamp("date_created"));
+            user.setLastUpdate(result.getTimestamp("last_update"));
             users.add(user);
         }
 
@@ -78,26 +79,24 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean delete(long id) throws SQLException {
+    public void delete(User user) throws SQLException {
         String sql = "DELETE FROM users where id = ?";
         Connection connection = dbUtil.connect();
 
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setLong(1, id);
+        statement.setLong(1, user.getId());
 
-        boolean rowDeleted = statement.executeUpdate() > 0;
+        statement.executeUpdate();
         statement.close();
         dbUtil.disconnect();
-
-        return rowDeleted;
     }
 
     @Override
-    public boolean update(User user) throws SQLException {
+    public void update(User user) throws SQLException {
 
         StringBuilder sb = new StringBuilder();
         sb.append("update users set first_name=?, last_name=?, email=?, ");
-        sb.append("address=?, phone_number=?, age=? ");
+        sb.append("address=?, phone_number=?, birth_date=? ");
         sb.append("where id=?");
 
         Connection connection = dbUtil.connect();
@@ -107,18 +106,17 @@ public class UserDaoImpl implements UserDao {
         ps.setString(3, user.getEmail());
         ps.setString(4, user.getAddress());
         ps.setString(5, user.getPhoneNumber());
-        ps.setByte(6, user.getAge());
+        ps.setDate(6, new java.sql.Date(user.getBirthDate().getTime()));
         ps.setLong(7, user.getId());
-        boolean isUpdated = ps.executeUpdate() > 0;
+        ps.executeUpdate();
         ps.close();
         dbUtil.disconnect();
-
-        return isUpdated;
     }
 
     @Override
     public User get(long id) throws SQLException {
         User user = null;
+
         String sql = "select * from users where id = ?";
         Connection connection = dbUtil.connect();
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -134,7 +132,10 @@ public class UserDaoImpl implements UserDao {
                     resultSet.getString("email"),
                     resultSet.getString("address"),
                     resultSet.getString("phone_number"),
-                    resultSet.getByte("age"));
+                    resultSet.getDate("birth_date")
+        );
+            user.setDateCreated(resultSet.getTimestamp("date_created"));
+            user.setLastUpdate(resultSet.getTimestamp("last_update"));
         }
 
         resultSet.close();
@@ -145,6 +146,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getByName(String name) throws SQLException {
+
         String sql = "select * from users where first_name = ?";
         Connection connection = dbUtil.connect();
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -161,7 +163,10 @@ public class UserDaoImpl implements UserDao {
                     resultSet.getString("email"),
                     resultSet.getString("address"),
                     resultSet.getString("phone_number"),
-                    resultSet.getByte("age"));
+                    resultSet.getDate("birth_date")
+            );
+            user.setDateCreated(resultSet.getTimestamp("date_created"));
+            user.setLastUpdate(resultSet.getTimestamp("last_update"));
         }
 
         resultSet.close();
@@ -179,7 +184,9 @@ public class UserDaoImpl implements UserDao {
         sb.append("email varchar(256), ");
         sb.append("address varchar(512), ");
         sb.append("phone_number varchar(15), ");
-        sb.append("age TINYINT UNSIGNED, ");
+        sb.append("birth_date date not null,");
+        sb.append("date_created timestamp default CURRENT_TIMESTAMP, ");
+        sb.append("last_update timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, ");
         sb.append("primary key (id))");
 
         Connection connection = dbUtil.connect();

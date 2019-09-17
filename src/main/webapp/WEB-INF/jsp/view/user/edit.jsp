@@ -1,6 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,9 +10,14 @@
 </head>
 <body>
 <h2>Edit user</h2>
-
-<a href="<c:url value="list" />">List all</a>
-<br />
+<p>
+    <a href="<c:url value="list" />">List all</a>
+</p>
+<p>
+    <i>
+        Created: <fmt:formatDate type="both" value="${user.dateCreated}" />
+    </i>
+</p>
 <form action="edit" method="post">
     <input type="hidden" name="id" value="${user.id}"/>
     <table border="0" width="300" cellpadding="5">
@@ -37,8 +43,10 @@
             <td><input type="text" name="phoneNumber" value="${user.phoneNumber}"/></td>
         </tr>
         <tr>
-            <td>Age</td>
-            <td><input type="text" name="age" value="${user.age}"/></td>
+            <td>Birth date (21/10/1991)</td>
+            <td>
+                <input type="text" name="birthDate" value="<fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy" />"/>
+            </td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Submit"/></td>

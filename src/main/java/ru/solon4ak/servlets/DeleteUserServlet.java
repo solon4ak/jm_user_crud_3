@@ -1,5 +1,6 @@
 package ru.solon4ak.servlets;
 
+import ru.solon4ak.model.User;
 import ru.solon4ak.service.UserService;
 import ru.solon4ak.service.UserServiceImpl;
 import ru.solon4ak.util.DBException;
@@ -27,7 +28,8 @@ public class DeleteUserServlet extends HttpServlet {
         String idString = req.getParameter("id");
         long id = Long.parseLong(idString);
         try {
-            userService.deleteUser(id);
+            User user = userService.getUserById(id);
+            userService.deleteUser(user);
             resp.setStatus(200);
             req.setAttribute("users", userService.getAllUsers());
             req.getRequestDispatcher("/WEB-INF/jsp/view/user/list.jsp").forward(req, resp);

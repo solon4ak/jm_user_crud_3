@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -9,10 +10,20 @@
 </head>
 <body>
 <h2>View user</h2>
+<p>
+    <a href="<c:url value="list" />">List all</a>
+</p>
+<p>
+    <i>
+        Created: <fmt:formatDate type="both" value="${user.dateCreated}"/>
+    </i>
+</p>
+<p>
+    <i>
+        Last updated: <fmt:formatDate type="both" value="${user.lastUpdate}"/>
+    </i>
+</p>
 
-<a href="<c:url value="list" />">List all</a>
-<br/>
-<br/>
 <table border="0" width="300" cellpadding="5">
     <tbody>
     <tr>
@@ -36,21 +47,26 @@
         <td>${user.phoneNumber}</td>
     </tr>
     <tr>
-        <td>Age</td>
-        <td>${user.age}</td>
+        <td>Birth date</td>
+        <td>
+            <fmt:formatDate value="${user.birthDate}" pattern="dd/MM/yyyy"/>
+        </td>
     </tr>
     </tbody>
 </table>
-<br/>
-<a href="<c:url value="edit">
+<p>
+    <a href="<c:url value="edit">
                <c:param name="id" value="${user.id}" />
            </c:url>">
-    Edit
-</a> / <a href="<c:url value="delete">
+        Edit
+    </a> /
+    <a href="<c:url value="delete">
                <c:param name="id" value="${user.id}" />
            </c:url>">
-    Delete
-</a>
+        Delete
+    </a>
+</p>
+
 </form>
 </body>
 </html>
