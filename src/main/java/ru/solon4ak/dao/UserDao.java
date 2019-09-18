@@ -5,11 +5,11 @@ import ru.solon4ak.model.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface UserDao {
-    void add(User user) throws SQLException;
-    List<User> listAll() throws SQLException;
-    void delete(User user) throws SQLException;
-    void update(User user) throws SQLException;
-    User get(long id) throws SQLException;
-    User getByName(String name) throws SQLException;
+public abstract class UserDao {
+    public abstract void add(User user);
+    public abstract List<User> listAll();
+    public abstract void delete(User user);
+    public abstract void update(User user);
+    public abstract User get(long id);
+    public abstract User getByName(String name);
 }

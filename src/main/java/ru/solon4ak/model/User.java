@@ -2,6 +2,8 @@ package ru.solon4ak.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Clock;
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -35,11 +37,15 @@ public class User implements Serializable {
     private Date birthDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date_created")
+    @Column(
+            name = "date_created"
+    )
     private Date dateCreated;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update")
+    @Column(
+            name = "last_update"
+    )
     private Date lastUpdate;
 
     public User() {

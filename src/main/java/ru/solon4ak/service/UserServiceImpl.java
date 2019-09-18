@@ -1,12 +1,10 @@
 package ru.solon4ak.service;
 
 import ru.solon4ak.dao.UserDao;
-import ru.solon4ak.dao.UserDaoHBNTImpl;
-import ru.solon4ak.dao.UserDaoJDBCImpl;
+import ru.solon4ak.dao.UserDaoFactoryImpl;
 import ru.solon4ak.model.User;
-import ru.solon4ak.util.DBException;
 
-import java.sql.SQLException;
+import java.time.Clock;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     private UserServiceImpl() {
-        userDao = UserDaoHBNTImpl.getInstance();
+        userDao = new UserDaoFactoryImpl().createUserDao();
     }
 
     public static UserServiceImpl getInstance() {
@@ -29,60 +27,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() throws DBException {
-        try {
-            return userDao.listAll();
-        } catch (SQLException ex) {
-            throw new DBException(ex);
-        }
+    public List<User> getAllUsers() {
+        return userDao.listAll();
     }
 
     @Override
-    public User getUserById(long id) throws DBException {
-        try {
-            return userDao.get(id);
-        } catch (SQLException ex) {
-            throw new DBException(ex);
-        }
+    public User getUserById(long id) {
+        return userDao.get(id);
     }
 
     @Override
-    public User getUserByName(String name) throws DBException {
-        try {
-            return userDao.getByName(name);
-        } catch (SQLException ex) {
-            throw new DBException(ex);
-        }
+    public User getUserByName(String name) {
+        return userDao.getByName(name);
     }
 
     @Override
-    public void addUser(User user) throws DBException {
-        try {
-            user.setDateCreated(Date.from(Instant.now()));
-            user.setLastUpdate(Date.from(Instant.now()));
-            userDao.add(user);
-        } catch (SQLException e) {
-            throw new DBException(e);
-        }
+    public void addUser(User user) {
+        user.setDateCreated(Date.from(Instant.now(Clock.systemUTC())));
+        user.setLastUpdate(Date.from(Instant.now(Clock.systemUTC())));
+        userDao.add(user);
     }
 
     @Override
-    public void updateUser(User user) throws DBException {
-        try {
-            user.setLastUpdate(Date.from(Instant.now()));
-            userDao.update(user);
-        } catch (SQLException e) {
-            throw new DBException(e);
-        }
+    public void updateUser(User user) {
+        user.setLastUpdate(Date.from(Instant.now(Clock.systemUTC())));
+        userDao.update(user);
     }
 
     @Override
-    public void deleteUser(User user) throws DBException {
-        try {
-            userDao.delete(user);
-        } catch (SQLException e) {
-            throw new DBException(e);
-        }
+    public void deleteUser(User user) {
+        userDao.delete(user);
     }
 
 }

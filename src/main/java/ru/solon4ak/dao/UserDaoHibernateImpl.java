@@ -5,25 +5,18 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ru.solon4ak.model.User;
-import ru.solon4ak.util.DBHelperHBNT;
+import ru.solon4ak.util.DBHelper;
 
 import java.util.List;
 
-public class UserDaoHBNTImpl implements UserDao {
+public class UserDaoHibernateImpl extends UserDao {
 
     private SessionFactory sessionFactory;
-    private static UserDaoHBNTImpl instance;
 
-    private UserDaoHBNTImpl() {
-        sessionFactory = DBHelperHBNT.getSessionFactory();
+    public UserDaoHibernateImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    public static UserDaoHBNTImpl getInstance() {
-        if (instance == null) {
-            instance = new UserDaoHBNTImpl();
-        }
-        return instance;
-    }
     @Override
     public void add(User user) {
         Session session = sessionFactory.openSession();

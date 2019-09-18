@@ -3,7 +3,6 @@ package ru.solon4ak.servlets;
 import ru.solon4ak.model.User;
 import ru.solon4ak.service.UserService;
 import ru.solon4ak.service.UserServiceImpl;
-import ru.solon4ak.util.DBException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,10 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,7 +46,7 @@ public class UpdateUserServlet extends HttpServlet {
             req.setAttribute("user", user);
             resp.setStatus(200);
             req.getRequestDispatcher("/WEB-INF/jsp/view/user/view.jsp").forward(req, resp);
-        } catch (DBException | ParseException ex) {
+        } catch (ParseException ex) {
             resp.setStatus(400);
             Logger.getLogger(UpdateUserServlet.class.getName())
                     .log(Level.SEVERE, "Exception while updating user.", ex);
@@ -67,15 +63,9 @@ public class UpdateUserServlet extends HttpServlet {
         String idString = req.getParameter("id");
         long id = Long.parseLong(idString);
 
-        try {
-            User user = userService.getUserById(id);
-            req.setAttribute("user", user);
-            resp.setStatus(200);
-            req.getRequestDispatcher("/WEB-INF/jsp/view/user/edit.jsp").forward(req, resp);
-        } catch (DBException ex) {
-            resp.setStatus(400);
-            Logger.getLogger(UpdateUserServlet.class.getName())
-                    .log(Level.SEVERE, "Exception while updating user.", ex);
-        }
+        User user = userService.getUserById(id);
+        req.setAttribute("user", user);
+        resp.setStatus(200);
+        req.getRequestDispatcher("/WEB-INF/jsp/view/user/edit.jsp").forward(req, resp);
     }
 }
