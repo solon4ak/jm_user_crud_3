@@ -22,9 +22,11 @@ public class UserDaoJDBCImpl extends UserDao {
     public void add(User user) {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("insert into users (first_name, last_name, email, address, phone_number, birth_date) ");
-        sb.append("values (?, ?, ?, ?, ?, ?)");
-
+        sb.append("insert into users (first_name, last_name, email, " +
+                "address, phone_number, role, " +
+                "nick_name, password, birth_date) ");
+        sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        createTable();
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sb.toString())) {
             ps.setString(1, user.getFirstName());
@@ -32,9 +34,12 @@ public class UserDaoJDBCImpl extends UserDao {
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getAddress());
             ps.setString(5, user.getPhoneNumber());
-            ps.setDate(6, new java.sql.Date(user.getBirthDate().getTime()));
-//            ps.setDate(7, new java.sql.Date(user.getDateCreated().getTime()));
-//            ps.setDate(8, new java.sql.Date(user.getLastUpdate().getTime()));
+            ps.setString(6, user.getRole());
+            ps.setString(7, user.getNickName());
+            ps.setString(8, user.getPassword());
+            ps.setDate(9, new java.sql.Date(user.getBirthDate().getTime()));
+//            ps.setDate(10, new java.sql.Date(user.getDateCreated().getTime()));
+//            ps.setDate(11, new java.sql.Date(user.getLastUpdate().getTime()));
             ps.executeUpdate();
         } catch (SQLException e) {
             log.warning("Exception while adding user.");
@@ -60,8 +65,11 @@ public class UserDaoJDBCImpl extends UserDao {
                         result.getString("email"),
                         result.getString("address"),
                         result.getString("phone_number"),
-                        result.getDate("birth_date")
+                        result.getDate("birth_date"),
+                        result.getString("nick_name"),
+                        result.getString("password")
                 );
+                user.setRole(result.getString("role"));
                 user.setDateCreated(result.getTimestamp("date_created"));
                 user.setLastUpdate(result.getTimestamp("last_update"));
                 users.add(user);
@@ -89,7 +97,7 @@ public class UserDaoJDBCImpl extends UserDao {
     public void update(User user) {
         StringBuilder sb = new StringBuilder();
         sb.append("update users set first_name=?, last_name=?, email=?, ");
-        sb.append("address=?, phone_number=?, birth_date=? ");
+        sb.append("address=?, phone_number=?, birth_date=?, password=?, role=? ");
         sb.append("where id=?");
 
         try (Connection connection = dbUtil.getConnection();
@@ -101,7 +109,9 @@ public class UserDaoJDBCImpl extends UserDao {
             ps.setString(5, user.getPhoneNumber());
             ps.setDate(6, new java.sql.Date(user.getBirthDate().getTime()));
 //            ps.setDate(7, new java.sql.Date(user.getLastUpdate().getTime()));
-            ps.setLong(7, user.getId());
+            ps.setString(7, user.getPassword());
+            ps.setString(8, user.getRole());
+            ps.setLong(9, user.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
             log.warning("Exception while updating user.");
@@ -124,8 +134,11 @@ public class UserDaoJDBCImpl extends UserDao {
                         resultSet.getString("email"),
                         resultSet.getString("address"),
                         resultSet.getString("phone_number"),
-                        resultSet.getDate("birth_date")
+                        resultSet.getDate("birth_date"),
+                        resultSet.getString("nick_name"),
+                        resultSet.getString("password")
                 );
+                user.setRole(resultSet.getString("role"));
                 user.setDateCreated(resultSet.getTimestamp("date_created"));
                 user.setLastUpdate(resultSet.getTimestamp("last_update"));
             }
@@ -137,12 +150,12 @@ public class UserDaoJDBCImpl extends UserDao {
     }
 
     @Override
-    public User getByName(String name) {
+    public User getByNickName(String nickName) {
         User user = null;
-        String sql = "select * from users where first_name = ?";
+        String sql = "select * from users where nick_name = ?";
         try (Connection connection = dbUtil.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setString(1, name);
+            statement.setString(1, nickName);
 
             ResultSet resultSet = statement.executeQuery();
 
@@ -154,8 +167,11 @@ public class UserDaoJDBCImpl extends UserDao {
                         resultSet.getString("email"),
                         resultSet.getString("address"),
                         resultSet.getString("phone_number"),
-                        resultSet.getDate("birth_date")
+                        resultSet.getDate("birth_date"),
+                        resultSet.getString("nick_name"),
+                        resultSet.getString("password")
                 );
+                user.setRole(resultSet.getString("role"));
                 user.setDateCreated(resultSet.getTimestamp("date_created"));
                 user.setLastUpdate(resultSet.getTimestamp("last_update"));
             }
@@ -167,15 +183,18 @@ public class UserDaoJDBCImpl extends UserDao {
     }
 
     public void createTable() {
-        dropTable();
+//        dropTable();
         StringBuilder sb = new StringBuilder();
-        sb.append("create table users ");
+        sb.append("create table if not exists users ");
         sb.append("(id bigint auto_increment, ");
-        sb.append("first_name varchar(256), ");
+        sb.append("first_name varchar(256) not null, ");
         sb.append("last_name varchar(256), ");
-        sb.append("email varchar(256), ");
+        sb.append("email varchar(256) not null unique, ");
         sb.append("address varchar(512), ");
         sb.append("phone_number varchar(15), ");
+        sb.append("role varchar(10) not null, ");
+        sb.append("nick_name varchar(15) not null unique, ");
+        sb.append("password varchar(32) not null, ");
         sb.append("birth_date date not null,");
         sb.append("date_created timestamp default CURRENT_TIMESTAMP, ");
         sb.append("last_update timestamp default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, ");

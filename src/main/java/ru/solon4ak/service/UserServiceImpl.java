@@ -4,7 +4,6 @@ import ru.solon4ak.dao.UserDao;
 import ru.solon4ak.dao.UserDaoFactoryImpl;
 import ru.solon4ak.model.User;
 
-import java.time.Clock;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
@@ -38,25 +37,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByName(String name) {
-        return userDao.getByName(name);
+        return userDao.getByNickName(name);
     }
 
     @Override
     public void addUser(User user) {
-        user.setDateCreated(Date.from(Instant.now(Clock.systemUTC())));
-        user.setLastUpdate(Date.from(Instant.now(Clock.systemUTC())));
+        user.setRole("user");
+        user.setDateCreated(Date.from(Instant.now()));
+        user.setLastUpdate(Date.from(Instant.now()));
         userDao.add(user);
     }
 
     @Override
     public void updateUser(User user) {
-        user.setLastUpdate(Date.from(Instant.now(Clock.systemUTC())));
+        user.setLastUpdate(Date.from(Instant.now()));
         userDao.update(user);
     }
 
     @Override
     public void deleteUser(User user) {
         userDao.delete(user);
+    }
+
+    @Override
+    public boolean verifyUser(String login, String password) {
+        User user = this.getUserByName(login);
+        return user != null && password.equals(user.getPassword());
     }
 
 }

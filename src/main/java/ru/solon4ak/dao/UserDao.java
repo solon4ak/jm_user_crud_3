@@ -11,5 +11,5 @@ public abstract class UserDao {
     public abstract void delete(User user);
     public abstract void update(User user);
     public abstract User get(long id);
-    public abstract User getByName(String name);
+    public abstract User getByNickName(String name);
 }

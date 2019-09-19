@@ -5,7 +5,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import ru.solon4ak.model.User;
-import ru.solon4ak.util.DBHelper;
 
 import java.util.List;
 
@@ -61,10 +60,10 @@ public class UserDaoHibernateImpl extends UserDao {
     }
 
     @Override
-    public User getByName(String name) {
+    public User getByNickName(String nickName) {
         Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from User u where u.firstName = :name");
-        query.setString("name", name);
+        Query query = session.createQuery("from User u where u.nickName = :name");
+        query.setString("name", nickName);
         return (User) query.uniqueResult();
     }
 }

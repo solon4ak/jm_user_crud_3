@@ -11,6 +11,9 @@
 <body>
 <h2>View user</h2>
 <p>
+    <a href="<c:url value="/login?logout" />">Logout</a>
+</p>
+<p>
     <a href="<c:url value="list" />">List all</a>
 </p>
 <p>
@@ -26,6 +29,10 @@
 
 <table border="0" width="300" cellpadding="5">
     <tbody>
+    <tr>
+        <td>Nickname</td>
+        <td>${user.nickName}</td>
+    </tr>
     <tr>
         <td>First name</td>
         <td>${user.firstName}</td>

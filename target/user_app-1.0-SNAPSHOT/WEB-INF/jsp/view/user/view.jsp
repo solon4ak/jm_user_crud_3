@@ -27,6 +27,10 @@
 <table border="0" width="300" cellpadding="5">
     <tbody>
     <tr>
+        <td>Nickname</td>
+        <td>${user.nickName}</td>
+    </tr>
+    <tr>
         <td>First name</td>
         <td>${user.firstName}</td>
     </tr>

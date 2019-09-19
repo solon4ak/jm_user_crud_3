@@ -23,6 +23,14 @@
     <table border="0" width="300" cellpadding="5">
         <tbody>
         <tr>
+            <td>Nickname</td>
+            <td><input type="text" name="nickName" value="${user.nickName}" readonly="true"/></td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td><input type="password" name="password" value="${user.password}"/></td>
+        </tr>
+        <tr>
             <td>First name</td>
             <td><input type="text" name="firstName" value="${user.firstName}"/></td>
         </tr>

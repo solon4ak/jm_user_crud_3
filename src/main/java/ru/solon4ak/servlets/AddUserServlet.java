@@ -28,7 +28,7 @@ public class AddUserServlet extends HttpServlet {
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.forLanguageTag("ru_RU"));
 
-        User user = null;
+        User user;
         try {
             user = new User(
                     req.getParameter("firstName"),
@@ -36,7 +36,9 @@ public class AddUserServlet extends HttpServlet {
                     req.getParameter("email"),
                     req.getParameter("address"),
                     req.getParameter("phoneNumber"),
-                    formatter.parse(req.getParameter("birthDate"))
+                    formatter.parse(req.getParameter("birthDate")),
+                    req.getParameter("nickName"),
+                    req.getParameter("password")
             );
         } catch (ParseException e) {
             throw new ServletException(e);

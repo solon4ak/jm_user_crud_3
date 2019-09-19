@@ -40,6 +40,7 @@ public class UpdateUserServlet extends HttpServlet {
             user.setAddress(req.getParameter("address"));
             user.setPhoneNumber(req.getParameter("phoneNumber"));
             user.setBirthDate(formatter.parse(req.getParameter("birthDate")));
+            user.setPassword(req.getParameter("password"));
 
             userService.updateUser(user);
 

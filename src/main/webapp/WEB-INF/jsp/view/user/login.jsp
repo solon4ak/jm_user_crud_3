@@ -9,12 +9,18 @@
 </head>
 <body>
 <h2>Login</h2>
+<c:if test="${loginFailed}">
+    <b>
+        The username or password you entered are not correct. <br />
+        Please supply the correct data.
+    </b>
+</c:if>
 <form action="login" method="post">
     <table border="0" width="300" cellpadding="5">
         <tbody>
         <tr>
             <td>Login</td>
-            <td><input type="text" name="login"/></td>
+            <td><input type="text" name="username"/></td>
         </tr>
         <tr>
             <td>Password</td>
@@ -26,8 +32,6 @@
         </tbody>
     </table>
 </form>
-<p>
-    <a href="<c:url value="add" />">Register</a>
-</p>
+
 </body>
 </html>

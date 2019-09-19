@@ -23,12 +23,14 @@
                 <th>Id</th>
                 <th>Created</th>
                 <th>Last update</th>
+                <th>Nickname</th>
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Email</th>
                 <th>Address</th>
                 <th>Phone number</th>
                 <th>Birth date</th>
+                <th>Role</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -38,12 +40,14 @@
                     <td><c:out value="${user.id}"/></td>
                     <td><fmt:formatDate type="both" value="${user.dateCreated}"/></td>
                     <td><fmt:formatDate type="both" value="${user.lastUpdate}"/></td>
+                    <td><c:out value="${user.nickName}"/></td>
                     <td><c:out value="${user.firstName}"/></td>
                     <td><c:out value="${user.lastName}"/></td>
                     <td><c:out value="${user.email}"/></td>
                     <td><c:out value="${user.address}"/></td>
                     <td><c:out value="${user.phoneNumber}"/></td>
                     <td><fmt:formatDate value="${user.birthDate}" pattern="dd/MM/yyyy"/></td>
+                    <td><c:out value="${user.role}"/></td>
                     <td>
                         <a href="<c:url value="view">
                                            <c:param name="id" value="${user.id}" />

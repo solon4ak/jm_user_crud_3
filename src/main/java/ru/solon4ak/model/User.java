@@ -2,8 +2,6 @@ package ru.solon4ak.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Clock;
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -17,7 +15,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "first_name", nullable = false, unique = true)
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
     @Column(name = "last_name")
@@ -37,21 +35,27 @@ public class User implements Serializable {
     private Date birthDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(
-            name = "date_created"
-    )
+    @Column(name = "date_created")
     private Date dateCreated;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(
-            name = "last_update"
-    )
+    @Column(name = "last_update")
     private Date lastUpdate;
+
+    @Column(name = "user_role", nullable = false)
+    private String role;
+
+    @Column(name = "nick_name", nullable = false, unique = true)
+    private String nickName;
+
+    @Column(name = "password", nullable = false)
+    private String password;
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String address, String phoneNumber, Date birthDate) {
+    public User(String firstName, String lastName, String email, String address,
+                String phoneNumber, Date birthDate, String nickName, String password) {
         this();
         this.firstName = firstName;
         this.lastName = lastName;
@@ -59,11 +63,13 @@ public class User implements Serializable {
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
+        this.nickName = nickName;
+        this.password = password;
     }
 
-    public User(Long id, String firstName, String lastName, String email,
-                String address, String phoneNumber, Date birthDate) {
-        this(firstName, lastName, email, address, phoneNumber, birthDate);
+    public User(Long id, String firstName, String lastName, String email, String address,
+                String phoneNumber, Date birthDate, String nickName, String password) {
+        this(firstName, lastName, email, address, phoneNumber, birthDate, nickName, password);
         this.id = id;
     }
 
@@ -135,6 +141,30 @@ public class User implements Serializable {
         return id;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -170,6 +200,5 @@ public class User implements Serializable {
         }
         return true;
     }
-
 
 }
