@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addUser(User user) {
-        user.setRole("user");
+    public void addUser(User user, String role) {
+        user.setRole(role);
         user.setDateCreated(Date.from(Instant.now()));
         user.setLastUpdate(Date.from(Instant.now()));
         userDao.add(user);

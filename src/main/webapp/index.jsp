@@ -5,7 +5,7 @@
     <a href="<c:url value="login" />">Login</a>
 </p>
 <p>
-    <a href="<c:url value="add" />">Register</a>
+    <a href="<c:url value="register" />">Register</a>
 </p>
 </body>
 </html>

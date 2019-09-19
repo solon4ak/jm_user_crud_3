@@ -9,6 +9,9 @@
     <title>Users List</title>
 </head>
 <body>
+<p>
+    <a href="<c:url value="/login?logout" />">Logout</a>
+</p>
 <h2>Users list</h2>
 <c:choose>
     <c:when test="${fn:length(users) == 0}">
@@ -59,6 +62,12 @@
                                            <c:param name="id" value="${user.id}" />
                                        </c:url>">
                             Edit
+                        </a>
+                        /
+                        <a href="<c:url value="delete">
+                                           <c:param name="id" value="${user.id}" />
+                                       </c:url>">
+                            Delete
                         </a>
                     </td>
                 </tr>

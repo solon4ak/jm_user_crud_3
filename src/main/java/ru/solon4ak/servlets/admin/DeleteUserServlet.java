@@ -1,4 +1,4 @@
-package ru.solon4ak.servlets;
+package ru.solon4ak.servlets.admin;
 
 import ru.solon4ak.model.User;
 import ru.solon4ak.service.UserService;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/delete")
+@WebServlet(urlPatterns = "/admin/delete")
 public class DeleteUserServlet extends HttpServlet {
     private final UserService userService = UserServiceImpl.getInstance();
 
@@ -28,7 +28,7 @@ public class DeleteUserServlet extends HttpServlet {
         userService.deleteUser(user);
         resp.setStatus(200);
         req.setAttribute("users", userService.getAllUsers());
-        req.getRequestDispatcher("/WEB-INF/jsp/view/user/list.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/view/admin/list.jsp").forward(req, resp);
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.solon4ak.servlets;
+package ru.solon4ak.servlets.admin;
 
 import ru.solon4ak.service.UserService;
 import ru.solon4ak.service.UserServiceImpl;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/list")
+@WebServlet(urlPatterns = "/admin/list")
 public class ListUsersServlet extends HttpServlet {
 
     private final UserService userService = UserServiceImpl.getInstance();
@@ -20,6 +20,6 @@ public class ListUsersServlet extends HttpServlet {
         request.setCharacterEncoding("utf-8");
         request.setAttribute("users", userService.getAllUsers());
         response.setStatus(200);
-        request.getRequestDispatcher("/WEB-INF/jsp/view/user/list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/view/admin/list.jsp").forward(request, response);
     }
 }

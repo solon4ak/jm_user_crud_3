@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -10,7 +10,7 @@
 </head>
 <body>
 <h2>New user</h2>
-<form action="add" method="post">
+<form action="register" method="post">
     <table border="0" width="300" cellpadding="5">
         <tbody>
         <tr>
@@ -52,9 +52,6 @@
     </table>
 
 </form>
-<p>
-    <a href="<c:url value="list" />">List users</a>
-</p>
 
 </body>
 </html>

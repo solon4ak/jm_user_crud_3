@@ -10,8 +10,8 @@
 </head>
 <body>
 <h2>New user</h2>
-<form action="register" method="post">
-    <table border="0" width="300" cellpadding="5">
+<form action="add" method="post">
+    <table cellspacing="3">
         <tbody>
         <tr>
             <td>Nickname</td>
@@ -46,12 +46,19 @@
             <td><input type="text" name="birthDate"/></td>
         </tr>
         <tr>
+            <td>User role</td>
+            <td><input type="text" name="role"/></td>
+        </tr>
+        <tr>
             <td colspan="2"><input type="submit" value="Submit"/></td>
         </tr>
         </tbody>
     </table>
 
 </form>
+<p>
+    <a href="<c:url value="list" />">List users</a>
+</p>
 
 </body>
 </html>

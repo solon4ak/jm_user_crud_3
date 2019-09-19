@@ -1,4 +1,4 @@
-package ru.solon4ak.servlets;
+package ru.solon4ak.servlets.user;
 
 import ru.solon4ak.model.User;
 import ru.solon4ak.service.UserService;
@@ -9,13 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-@WebServlet(urlPatterns = "/add")
-public class AddUserServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/register")
+public class RegisterServlet extends HttpServlet {
 
     private final UserService userService = UserServiceImpl.getInstance();
 
@@ -40,16 +41,13 @@ public class AddUserServlet extends HttpServlet {
                     req.getParameter("nickName"),
                     req.getParameter("password")
             );
+            userService.addUser(user, "user");
+            req.getSession(true).setAttribute("username", req.getParameter("nickName"));
+            req.changeSessionId();
+            resp.sendRedirect("user/view");
         } catch (ParseException e) {
             throw new ServletException(e);
         }
-
-        userService.addUser(user);
-        user = userService.getUserByName(req.getParameter("firstName"));
-        req.setAttribute("user", user);
-        resp.setStatus(200);
-        req.getRequestDispatcher("/WEB-INF/jsp/view/user/view.jsp").forward(req, resp);
-
     }
 
     @Override

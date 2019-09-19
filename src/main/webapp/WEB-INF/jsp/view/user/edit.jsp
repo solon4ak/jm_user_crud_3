@@ -10,16 +10,14 @@
 </head>
 <body>
 <h2>Edit user</h2>
-<p>
-    <a href="<c:url value="list" />">List all</a>
-</p>
+
 <p>
     <i>
         Created: <fmt:formatDate type="both" value="${user.dateCreated}" />
     </i>
 </p>
 <form action="edit" method="post">
-    <input type="hidden" name="id" value="${user.id}"/>
+<%--    <input type="hidden" name="id" value="${user.id}"/>--%>
     <table border="0" width="300" cellpadding="5">
         <tbody>
         <tr>

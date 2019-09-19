@@ -1,4 +1,4 @@
-package ru.solon4ak.servlets;
+package ru.solon4ak.servlets.admin;
 
 import ru.solon4ak.model.User;
 import ru.solon4ak.service.UserService;
@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(urlPatterns = "/edit")
+@WebServlet(urlPatterns = "/admin/edit")
 public class UpdateUserServlet extends HttpServlet {
     private final UserService userService = UserServiceImpl.getInstance();
 
@@ -28,7 +28,6 @@ public class UpdateUserServlet extends HttpServlet {
         resp.setCharacterEncoding("utf-8");
 
         long id = Long.parseLong(req.getParameter("id"));
-
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.forLanguageTag("ru_RU"));
 
         try {
@@ -41,12 +40,12 @@ public class UpdateUserServlet extends HttpServlet {
             user.setPhoneNumber(req.getParameter("phoneNumber"));
             user.setBirthDate(formatter.parse(req.getParameter("birthDate")));
             user.setPassword(req.getParameter("password"));
-
+            user.setRole(req.getParameter("role"));
             userService.updateUser(user);
 
             req.setAttribute("user", user);
             resp.setStatus(200);
-            req.getRequestDispatcher("/WEB-INF/jsp/view/user/view.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/view/admin/view.jsp").forward(req, resp);
         } catch (ParseException ex) {
             resp.setStatus(400);
             Logger.getLogger(UpdateUserServlet.class.getName())
@@ -67,6 +66,6 @@ public class UpdateUserServlet extends HttpServlet {
         User user = userService.getUserById(id);
         req.setAttribute("user", user);
         resp.setStatus(200);
-        req.getRequestDispatcher("/WEB-INF/jsp/view/user/edit.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/view/admin/edit.jsp").forward(req, resp);
     }
 }

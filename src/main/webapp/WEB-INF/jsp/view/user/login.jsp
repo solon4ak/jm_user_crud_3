@@ -9,11 +9,14 @@
 </head>
 <body>
 <h2>Login</h2>
+
 <c:if test="${loginFailed}">
-    <b>
-        The username or password you entered are not correct. <br />
-        Please supply the correct data.
-    </b>
+    <p>
+        <i>
+            The username or password you entered are not correct. <br />
+            Please supply the correct data.
+        </i>
+    </p>
 </c:if>
 <form action="login" method="post">
     <table border="0" width="300" cellpadding="5">

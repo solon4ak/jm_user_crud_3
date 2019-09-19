@@ -14,6 +14,9 @@
     <a href="<c:url value="/login?logout" />">Logout</a>
 </p>
 <p>
+    <a href="<c:url value="list" />">List all</a>
+</p>
+<p>
     <i>
         Created: <fmt:formatDate type="both" value="${user.dateCreated}"/>
     </i>
@@ -56,11 +59,24 @@
             <fmt:formatDate value="${user.birthDate}" pattern="dd/MM/yyyy"/>
         </td>
     </tr>
+    <tr>
+        <td>User role</td>
+        <td>
+            ${user.role}
+        </td>
+    </tr>
     </tbody>
 </table>
 <p>
-    <a href="<c:url value="/user/edit" />">
+    <a href="<c:url value="edit">
+               <c:param name="id" value="${user.id}" />
+           </c:url>">
         Edit
+    </a> /
+    <a href="<c:url value="delete">
+               <c:param name="id" value="${user.id}" />
+           </c:url>">
+        Delete
     </a>
 </p>
 
