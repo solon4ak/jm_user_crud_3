@@ -13,13 +13,13 @@ public class UserDaoFactoryImpl implements UserDaoFactory {
 
     @Override
     public UserDao createUserDao() {
+        DBHelper helper = DBHelper.getInstance();
         if ("hibernate".equals(api)) {
-            SessionFactory sessionFactory = DBHelper.getInstance().getSessionFactory();
+            SessionFactory sessionFactory = helper.getSessionFactory();
             UserDao userDao = new UserDaoHibernateImpl(sessionFactory);
-            System.out.println("UD: " + userDao.toString());
             return userDao;
         } else if ("jdbc".equals(api)) {
-            return new UserDaoJDBCImpl();
+            return new UserDaoJDBCImpl(helper);
         }
         return null;
     }

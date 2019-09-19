@@ -14,8 +14,8 @@ public class UserDaoJDBCImpl extends UserDao {
 
     private DBHelper dbUtil;
 
-    public UserDaoJDBCImpl() {
-        dbUtil = DBHelper.getInstance();
+    public UserDaoJDBCImpl(DBHelper dbHelper) {
+        this.dbUtil = dbHelper;
     }
 
     @Override
