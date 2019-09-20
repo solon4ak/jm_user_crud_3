@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(urlPatterns = {"/*"})
+//@WebFilter(urlPatterns = {"/*"})
 public class AuthenticationFilter implements Filter {
     public void destroy() {
     }
@@ -16,7 +16,8 @@ public class AuthenticationFilter implements Filter {
             throws ServletException, IOException {
         HttpSession session = ((HttpServletRequest) req).getSession(false);
         if (session != null && session.getAttribute("username") == null) {
-            ((HttpServletRequest) req).getRequestDispatcher("/WEB-INF/jsp/view/user/login.jsp").forward(req, resp);
+//            req.getRequestDispatcher("/WEB-INF/jsp/view/user/login.jsp").forward(req, resp);
+            ((HttpServletResponse) resp).sendRedirect("login");
         } else {
             chain.doFilter(req, resp);
         }
