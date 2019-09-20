@@ -53,7 +53,7 @@
     <tr>
         <td>Birth date</td>
         <td>
-            <fmt:formatDate value="${user.birthDate}" pattern="dd/MM/yyyy"/>
+            <fmt:formatDate value="${user.birthDate}" type="date" dateStyle="medium"/>
         </td>
     </tr>
     </tbody>
