@@ -18,12 +18,12 @@
 </p>
 <p>
     <i>
-        Created: <fmt:formatDate type="both" value="${user.dateCreated}"/>
+        Created: <fmt:formatDate type="both" dateStyle="medium" value="${user.dateCreated}"/>
     </i>
 </p>
 <p>
     <i>
-        Last updated: <fmt:formatDate type="both" value="${user.lastUpdate}"/>
+        Last updated: <fmt:formatDate type="both" dateStyle="medium" value="${user.lastUpdate}"/>
     </i>
 </p>
 
@@ -56,7 +56,7 @@
     <tr>
         <td>Birth date</td>
         <td>
-            <fmt:formatDate value="${user.birthDate}" pattern="dd/MM/yyyy"/>
+            <fmt:formatDate value="${user.birthDate}" type="date" dateStyle="medium"/>
         </td>
     </tr>
     <tr>

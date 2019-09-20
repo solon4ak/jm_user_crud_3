@@ -11,11 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(
-        filterName = "adminFilter",
-        dispatcherTypes = {DispatcherType.REQUEST},
-        urlPatterns = {"/admin", "/admin/*"}
-)
+@WebFilter("/admin/*")
 public class AdminFilter implements Filter {
 
     private UserService userService = UserServiceImpl.getInstance();

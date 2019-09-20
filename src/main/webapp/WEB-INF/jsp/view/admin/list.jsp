@@ -41,8 +41,8 @@
             <c:forEach items="${users}" var="user">
                 <tr>
                     <td><c:out value="${user.id}"/></td>
-                    <td><fmt:formatDate type="both" value="${user.dateCreated}"/></td>
-                    <td><fmt:formatDate type="both" value="${user.lastUpdate}"/></td>
+                    <td><fmt:formatDate type="both" dateStyle="medium" value="${user.dateCreated}"/></td>
+                    <td><fmt:formatDate type="both" dateStyle="medium" value="${user.lastUpdate}"/></td>
                     <td><c:out value="${user.nickName}"/></td>
                     <td><c:out value="${user.firstName}"/></td>
                     <td><c:out value="${user.lastName}"/></td>

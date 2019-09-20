@@ -47,7 +47,14 @@
         </tr>
         <tr>
             <td>User role</td>
-            <td><input type="text" name="role"/></td>
+            <td>
+<%--                <input type="text" name="role"/>--%>
+                <select name="role" size="1">
+                    <c:forEach items="${roles}" var="role">
+                        <option value="${role}">${role}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Submit"/></td>

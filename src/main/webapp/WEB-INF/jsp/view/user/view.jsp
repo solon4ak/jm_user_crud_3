@@ -58,11 +58,6 @@
     </tr>
     </tbody>
 </table>
-<p>
-    <a href="<c:url value="/user/edit" />">
-        Edit
-    </a>
-</p>
 
 </form>
 </body>

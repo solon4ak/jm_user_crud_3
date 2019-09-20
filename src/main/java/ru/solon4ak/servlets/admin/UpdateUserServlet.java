@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -65,6 +68,10 @@ public class UpdateUserServlet extends HttpServlet {
 
         User user = userService.getUserById(id);
         req.setAttribute("user", user);
+
+        List<String> userRoles = new ArrayList<>(Arrays.asList(new String[] {"user", "admin"}));
+        req.setAttribute("roles", userRoles);
+
         resp.setStatus(200);
         req.getRequestDispatcher("/WEB-INF/jsp/view/admin/edit.jsp").forward(req, resp);
     }

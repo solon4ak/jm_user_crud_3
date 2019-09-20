@@ -15,7 +15,7 @@
 </p>
 <p>
     <i>
-        Created: <fmt:formatDate type="both" value="${user.dateCreated}" />
+        Created: <fmt:formatDate type="both" dateStyle="medium" value="${user.dateCreated}" />
     </i>
 </p>
 <form action="edit" method="post">
@@ -53,12 +53,19 @@
         <tr>
             <td>Birth date (21/10/1991)</td>
             <td>
-                <input type="text" name="birthDate" value="<fmt:formatDate value="${user.birthDate}" pattern="dd.MM.yyyy" />"/>
+                <input type="text" name="birthDate" datatype="date" dateStyle="medium" value="<fmt:formatDate value="${user.birthDate}"/>"/>
             </td>
         </tr>
         <tr>
             <td>User role</td>
-            <td><input type="text" name="role" value="${user.role}"/></td>
+            <td>
+<%--                <input type="text" name="role" value="${user.role}"/>--%>
+                <select name="role">
+                    <c:forEach items="${roles}" var="role">
+                        <option value="${role}" ${user.role == role ? 'selected="selected"' : ''}>${role}</option>
+                    </c:forEach>
+                </select>
+            </td>
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Submit"/></td>

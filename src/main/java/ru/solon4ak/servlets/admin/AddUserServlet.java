@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 @WebServlet(urlPatterns = "/admin/add")
@@ -55,6 +58,8 @@ public class AddUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+        List<String> userRoles = new ArrayList<>(Arrays.asList(new String[] {"user", "admin"}));
+        req.setAttribute("roles", userRoles);
         req.getRequestDispatcher("/WEB-INF/jsp/view/admin/add.jsp").forward(req, resp);
     }
 }
