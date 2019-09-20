@@ -53,7 +53,7 @@
         <tr>
             <td>Birth date (21/10/1991)</td>
             <td>
-                <input type="text" name="birthDate" datatype="date" dateStyle="medium" value="<fmt:formatDate value="${user.birthDate}"/>"/>
+                <input type="text" name="birthDate" value="<fmt:formatDate value="${user.birthDate}" type="date" dateStyle="medium" />"/>
             </td>
         </tr>
         <tr>
